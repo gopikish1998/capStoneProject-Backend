@@ -428,10 +428,11 @@ app.post('/contact', async (req, res) => {
             html: `mail:${req.body.email} <br/>
             message:${req.body.text}`
         })
-        
+        res.json({message: 'Sucessfull'})
         
     } catch (error) {
         console.log(error)
+        res.json({ message:'failed'})
     }
 })
 app.listen(PORT, function () {
