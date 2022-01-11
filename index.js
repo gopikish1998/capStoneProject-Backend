@@ -404,13 +404,35 @@ app.post("/login",async function(req,res){
             // if both are correct then allow them
         } else {
             res.status(404).json({
-                message: "Username/Password is incorrect"
+                message: "User may not have verified"
             })
         }
     } catch (error) {
         console.log(error)
     }
 
+})
+app.post('/contact', async (req, res) => {
+    try {
+        let transporter = nodemailer.createTransport({
+            service:"hotmail",
+            auth: {
+              user: process.env.user, 
+              pass: process.env.pass,
+            }
+        })
+        await transporter.sendMail({
+            from:process.env.user,
+            to:`kishorepenjendra@gmail.com`,
+            subject:"Contact from Portfolio",
+            html: `mail:${req.body.email} <br/>
+            message:${req.body.text}`
+        })
+        
+        
+    } catch (error) {
+        console.log(error)
+    }
 })
 app.listen(PORT, function () {
     console.log(`The app is listening in port ${PORT}`)
